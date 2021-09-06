@@ -1,0 +1,11 @@
+C:\University\Semester5\CS\SBT\bin\Debug\SBT.exe.config
+C:\University\Semester5\CS\SBT\bin\Debug\SBT.exe
+C:\University\Semester5\CS\SBT\bin\Debug\SBT.pdb
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.csproj.AssemblyReference.cache
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.SBT.resources
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.ImportForm.resources
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.Properties.Resources.resources
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.csproj.GenerateResource.cache
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.csproj.CoreCompileInputs.cache
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.exe
+C:\University\Semester5\CS\SBT\obj\Debug\SBT.pdb
