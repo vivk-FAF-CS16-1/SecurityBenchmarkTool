@@ -12,11 +12,15 @@ namespace SBT
         //private FileInfo _databaseFileFileInfo;
         //private List<FileInfo> _databaseFilesInfo;
 
+        private static AuditFilesDatabaseController _instance;
+
         private Dictionary<string, string> _databaseNamesFiles;
 
-        private readonly string _databaseFilename;
+        private readonly string _databaseFilename = "TestDatabase.txt";
+
+        public Action<Dictionary<string, string>> OnDatabaseChanged;
         
-        public AuditFilesDatabaseController()
+        private AuditFilesDatabaseController()
         {
             if (File.Exists(_databaseFilename))
             {
@@ -26,17 +30,31 @@ namespace SBT
 
                 foreach (var fileString in File.ReadAllLines(_databaseFilename))
                 {
-                    _databaseNamesFiles.Add(fileString.Split(':')[0], fileString.Split(':')[1]);
+                    _databaseNamesFiles.Add(fileString.Split('^')[0], fileString.Split('^')[1]);
                 }
             }
 
             else
             {
-                File.Create(_databaseFilename);
-
+                var temp = File.Create(_databaseFilename);
+                temp.Close();
+                
                 //_databaseFileFileInfo = new FileInfo(_databaseFilename);
                 _databaseNamesFiles = new Dictionary<string, string>();
             }
+
+            OnDatabaseChanged?.Invoke(_databaseNamesFiles);
+
+
+        }
+
+        public static AuditFilesDatabaseController GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new AuditFilesDatabaseController();
+            }
+            return _instance;
         }
 
         public bool AddFileToDatabase(string uniqueName, string pathFilename)
@@ -49,10 +67,14 @@ namespace SBT
 
             _databaseNamesFiles.Add(uniqueName, pathFilename);
 
-            string[] str = { uniqueName + ":" + pathFilename };
+            using (StreamWriter sw = File.AppendText(_databaseFilename))
+            {
+                sw.WriteLine(uniqueName + "^" + pathFilename);
+            }
 
-            File.WriteAllLines(_databaseFilename, str);
+            
 
+            OnDatabaseChanged?.Invoke(_databaseNamesFiles);
             return true;
         }
 
@@ -67,6 +89,11 @@ namespace SBT
                 return true;
 
             return false;
+        }
+
+        public string ReadDatabaseFileByName(string uniqueName)
+        {
+            return File.ReadAllText(GetDatabaseNamesFilenames()[uniqueName]);
         }
     }
 

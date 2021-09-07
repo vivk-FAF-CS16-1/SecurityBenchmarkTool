@@ -94,6 +94,7 @@ namespace SBT
             // 
             // openFileDialog1
             // 
+            this.openFileDialog1.DefaultExt = "txt";
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // label3

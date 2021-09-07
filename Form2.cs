@@ -12,15 +12,20 @@ namespace SBT
 {
     public partial class ImportForm : Form
     {
+        private AuditFilesDatabaseController _auditFilesDatabaseController;
         public ImportForm()
         {
             InitializeComponent();
+            _auditFilesDatabaseController = AuditFilesDatabaseController.GetInstance();
+            openFileDialog1.DefaultExt = "audit";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                
                 textBox2.Text = openFileDialog1.FileName;
                 label3.Enabled = false;
                 label4.Enabled = false;
@@ -32,6 +37,7 @@ namespace SBT
             if (textBox2.Text == "")
             {
                 label3.Enabled = true;
+                label4.Enabled = false;
                 return ;
             }
 
@@ -42,12 +48,27 @@ namespace SBT
                 return ;
             }
 
-            label3.Enabled = false;
-            label4.Enabled = false;
-            
-            
+            foreach (var uniqueName in _auditFilesDatabaseController.GetDatabaseNamesFilenames().Keys)
+                if (textBox1.Text == uniqueName)
+                {
+                    label3.Enabled = false;
+                    label4.Enabled = true;
+                    return;
+                }    
 
-            Close();
+            if (_auditFilesDatabaseController.AddFileToDatabase(textBox1.Text, textBox2.Text))
+            {
+                label3.Enabled = false;
+                label4.Enabled = false;
+                Close();
+            }
+            else
+            {
+                label3.Enabled = true;
+                label4.Enabled = true;
+            }
+
+            
 
 
         }
