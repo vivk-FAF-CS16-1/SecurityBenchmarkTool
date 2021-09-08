@@ -94,10 +94,15 @@ namespace SBT
 
         private void tableLayoutPanel1_Click(object sender, EventArgs e)
         {
-            var rowIndex = tableLayoutPanel1.GetRow((Control)sender);
+            Console.WriteLine("????????????");
 
-            if (rowIndex == 0)
+            var rowIndex = tableLayoutPanel1.GetRow((Control)sender);
+            Console.WriteLine(rowIndex);
+
+            if (rowIndex == 0 || rowIndex == -1)
                 return;
+
+            Console.WriteLine(rowIndex);
 
             var rowControl = tableLayoutPanel1.GetControlFromPosition(0, rowIndex);
 
