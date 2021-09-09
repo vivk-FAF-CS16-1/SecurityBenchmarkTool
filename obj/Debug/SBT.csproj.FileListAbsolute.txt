@@ -20,3 +20,17 @@ C:\University\SemesterV\CS\sbt_lab1_frontend\obj\Debug\SBT.csproj.GenerateResour
 C:\University\SemesterV\CS\sbt_lab1_frontend\obj\Debug\SBT.csproj.CoreCompileInputs.cache
 C:\University\SemesterV\CS\sbt_lab1_frontend\obj\Debug\SBT.exe
 C:\University\SemesterV\CS\sbt_lab1_frontend\obj\Debug\SBT.pdb
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\bin\Debug\SBT.exe.config
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\bin\Debug\SBT.exe
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\bin\Debug\SBT.pdb
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.csprojAssemblyReference.cache
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.SBT.resources
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.ImportForm.resources
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.Properties.Resources.resources
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.csproj.GenerateResource.cache
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.csproj.CoreCompileInputs.cache
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.csproj.CopyComplete
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.exe
+C:\Users\Oleg\Documents\Projects\CS16.1\sbt_lab1_frontend\obj\Debug\SBT.pdb

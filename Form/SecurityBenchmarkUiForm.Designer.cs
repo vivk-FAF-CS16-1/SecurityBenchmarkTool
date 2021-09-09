@@ -1,7 +1,7 @@
 ﻿
-namespace SBT
+namespace SBT.Form
 {
-    partial class SBT
+    partial class SecurityBenchmarkUiForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -66,7 +66,6 @@ namespace SBT
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 96.81818F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(558, 699);
             this.tableLayoutPanel1.TabIndex = 2;
-            this.tableLayoutPanel1.Click += new System.EventHandler(this.tableLayoutPanel1_Click);
             // 
             // textBox2
             // 
@@ -114,7 +113,7 @@ namespace SBT
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // SBT
+            // SecurityBenchmarkUi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -124,8 +123,8 @@ namespace SBT
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "SBT";
-            this.Text = "SBT";
+            this.Name = "SecurityBenchmarkUiForm";
+            this.Text = "SecurityBenchmarkUi";
             this.Load += new System.EventHandler(this.SBT_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

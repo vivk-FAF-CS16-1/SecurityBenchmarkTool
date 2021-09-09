@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT", "SBT.csproj", "{AAF31EA1-6EB2-40EA-A8E6-FFFDE46F42D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityBenchmarkUi", "SecurityBenchmarkUi.csproj", "{AAF31EA1-6EB2-40EA-A8E6-FFFDE46F42D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

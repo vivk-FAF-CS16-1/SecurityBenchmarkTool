@@ -1,5 +1,5 @@
 ﻿
-namespace SBT
+namespace SBT.Form
 {
     partial class ImportForm
     {
