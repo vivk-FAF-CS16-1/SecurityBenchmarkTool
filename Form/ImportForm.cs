@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using SBT.Audit;
 using SBT.DataBase;
 
@@ -69,13 +70,17 @@ namespace SBT.Form
             {
                 var sourceContent = sr.ReadToEnd();
                 var (err, parseData) = AuditParser.Parse(sourceContent);
+                var test = AuditParser.ParseItems(parseData);
+                var testJson = JsonConvert.SerializeObject(test);
+                var testDeserialize = JsonConvert.DeserializeObject<List<AuditItem>>(testJson);
                 var content = err ?? AuditWriter.ToString(parseData);
                 var newItem = new DBItem
                 {
                     GUID = Guid.NewGuid(),
                     Name = name,
                     SourcePath = sourcePath,
-                    Content = content
+                    Content = content,
+                    Items = new List<AuditItem>(test)
                 };
 
                 _container.Add(newItem);

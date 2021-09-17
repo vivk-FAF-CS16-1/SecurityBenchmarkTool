@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -66,6 +67,11 @@ namespace SBT.Audit
                 else if (propertyMatches.Count != 0)
                 {
                     var args = lines[index].Split(':');
+                    if (char.IsUpper(args[0][0]))
+                    {
+                        continue;
+                    }
+                    
                     var property = string.Empty;
 
                     if (args.Length > 0)
@@ -82,7 +88,7 @@ namespace SBT.Audit
                         audit.Add(new AuditStruct(
                             index: index + 1, 
                             length: stack.Count, 
-                            line: key + " :"));
+                            line: key));
                         audit.Add(new AuditStruct(
                             index: index + 1, 
                             length: stack.Count + 1, 
@@ -92,6 +98,62 @@ namespace SBT.Audit
             }
             
             return (null, audit);
+        }
+        
+        public static List<AuditItem> ParseItems(IReadOnlyList<AuditStruct> container)
+        {
+            var items = new List<AuditItem>();
+
+            var isItem = false;
+            var itemLen = -1;
+            var index = 0;
+
+            AuditItem item = null;
+            
+            while (index < container.Count)
+            {
+                if (isItem == true)
+                {
+                    var fieldKey = container[index];
+                    if (fieldKey.Length <= itemLen)
+                    {
+                        isItem = false;
+                        itemLen = -1;
+                        items.Add(item);
+                        item = null;
+                        continue;
+                    }
+
+                    var fieldValue = container[index + 1];
+                    var field = new AuditFieldStruct
+                    {
+                        Key = fieldKey.Line,
+                        Value = fieldValue.Line,
+                        ValueType = AuditFieldStruct.Type.Dynamic
+                    };
+                    item.AddField(field);
+
+                    index += 2;
+                    
+                    continue;
+                }
+
+                var newItem = container[index];
+                var itemRgx = new Regex(Regexes["item"]);
+                var itemMatches = itemRgx.Matches(newItem.Line);
+                if (itemMatches.Count != 0) 
+                {
+                    isItem = true;
+                    itemLen = newItem.Length;
+
+                    item = new AuditItem();
+                    item.ClearFields();
+                }
+
+                index += 1;
+            }
+
+            return items;
         }
 
         private static string Trim(string command)
@@ -116,6 +178,7 @@ namespace SBT.Audit
             Regexes["open"] = "^[ \\t]*<(item|custom_item|report|if|then|else|condition)[ \\t>]";
             Regexes["close"] = "^[ \\t]*</(item|custom_item|report|if|then|else|condition)[ \\t>]";
             Regexes["property"] = "^[ \\t]*\\w*[ \\t]*:[ \\t]*[[\"\\'\\w+]";
+            Regexes["item"] = "^[ \\t]*<(item|custom_item)[ \\t>]";
         }
     }
 }

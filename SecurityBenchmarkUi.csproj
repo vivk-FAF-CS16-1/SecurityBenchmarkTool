@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audit\AuditFieldStruct.cs" />
+    <Compile Include="Audit\AuditItem.cs" />
     <Compile Include="Audit\AuditParser.cs" />
     <Compile Include="Audit\AuditStruct.cs" />
     <Compile Include="Audit\AuditWriter.cs" />

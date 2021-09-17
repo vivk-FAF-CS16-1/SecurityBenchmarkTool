@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using SBT.Audit;
 using SBT.DataBase;
 
 namespace SBT.Form
@@ -12,6 +13,9 @@ namespace SBT.Form
         private JSONSaver _jsonSaver;
         private List<DBItem> _container;
 
+        private Control _currentItemControl;
+        private bool _ignoreTextChanged;
+
         public SecurityBenchmarkUiForm()
         {
             InitializeComponent();
@@ -20,6 +24,9 @@ namespace SBT.Form
             {
                 _guids = new Dictionary<Control, Guid>();
             }
+
+            _currentItemControl = null;
+            _ignoreTextChanged = false;
 
             _jsonSaver = JSONSaver.Instance;
             if (_jsonSaver.IsLoaded == false)
@@ -79,9 +86,42 @@ namespace SBT.Form
             UpdateTableLayoutPanel(_container);
         }
 
-        private void UpdateTextWindow(string content)
+        private bool Save_handler()
         {
-            textBox1.Text = content;
+            if (_jsonSaver == null)
+                return false;
+            
+            if (_jsonSaver.IsLoaded == false)
+                return false;
+            
+            if (_container == null)
+                return false;
+            
+            _jsonSaver.Save();
+            return true;
+        }
+
+        private void UpdateTextWindow(List<AuditItem> container)
+        {
+            richTextBox1.Nodes.Clear();
+            
+            for (var i = 0; i < container.Count; i++)
+            {
+                var item = container[i];
+
+                richTextBox1.Nodes.Insert(i, item.GetName());
+                var node = richTextBox1.Nodes[i];
+                for (var j = 0; j < item.CountFields(); j++)
+                {
+                    var field = item.Get(j);
+                    var key = field.Key;
+                    var value = field.Value;
+                    
+                    var keyNode = node.Nodes.Add(key, key);
+                    var indexOfFirst = node.Nodes.IndexOf(keyNode);
+                    node.Nodes[indexOfFirst].Nodes.Add(value, value);
+                }
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -120,7 +160,36 @@ namespace SBT.Form
             var guid = _guids[rowControl];
             var content = _container.Find(item => item.GUID == guid).Content;
 
-            UpdateTextWindow(content);
+            _currentItemControl = rowControl;
+
+            var container = _container.Find(item => item.GUID == guid);
+
+            UpdateTextWindow(container.Items);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (_ignoreTextChanged == true)
+                return;
+            
+            if (_currentItemControl == null)
+                return;
+
+            if (_container == null)
+                return;
+            
+            var textControl = sender as Control;
+            if (textControl == null)
+                return;
+
+            var guid = _guids[_currentItemControl];
+            var item = _container.Find(match => match.GUID == guid);
+            item.Content = textControl.Text;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Save_handler();
         }
     }
 }
