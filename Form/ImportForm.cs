@@ -70,6 +70,7 @@ namespace SBT.Form
             {
                 var sourceContent = sr.ReadToEnd();
                 var (err, parseData) = AuditParser.Parse(sourceContent);
+                var (err2, parseTest) = AuditParser.ParseV2(sourceContent);
                 var test = AuditParser.ParseItems(parseData);
                 var testJson = JsonConvert.SerializeObject(test);
                 var testDeserialize = JsonConvert.DeserializeObject<List<AuditItem>>(testJson);
@@ -79,8 +80,8 @@ namespace SBT.Form
                     GUID = Guid.NewGuid(),
                     Name = name,
                     SourcePath = sourcePath,
-                    Content = content,
-                    Items = new List<AuditItem>(test)
+                    
+                    Audit = new List<Audit2Struct>(parseTest)
                 };
 
                 _container.Add(newItem);

@@ -28,6 +28,11 @@ namespace SBT.Audit
             var width = container.Last().Index.ToString().Length;
             foreach (var auditStruct in container)
             {
+                if (auditStruct.GUID != null)
+                {
+                    
+                }
+                
                 if (@params.Indexing)
                 {
                     var index = GetIndexing(auditStruct.Index, width);
@@ -75,5 +80,7 @@ namespace SBT.Audit
 
             return result;
         }
+
+        
     }
 }

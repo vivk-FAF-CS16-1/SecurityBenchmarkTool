@@ -101,19 +101,23 @@ namespace SBT.Form
             return true;
         }
 
-        private void UpdateTextWindow(List<AuditItem> container)
+        private void UpdateTextWindow(List<Audit2Struct> container)
         {
             richTextBox1.Nodes.Clear();
-            
+
             for (var i = 0; i < container.Count; i++)
             {
+                if (container[i].IsItem == false)
+                    continue;
+                
                 var item = container[i];
 
-                richTextBox1.Nodes.Insert(i, item.GetName());
-                var node = richTextBox1.Nodes[i];
-                for (var j = 0; j < item.CountFields(); j++)
+                var name = item.GetName();
+                var node = richTextBox1.Nodes.Add(name, name);
+
+                for (var j = 0; j < item.Fields.Count; j++)
                 {
-                    var field = item.Get(j);
+                    var field = item.Fields[j];
                     var key = field.Key;
                     var value = field.Value;
                     
@@ -158,33 +162,12 @@ namespace SBT.Form
                 return;
 
             var guid = _guids[rowControl];
-            var content = _container.Find(item => item.GUID == guid).Content;
 
             _currentItemControl = rowControl;
 
             var container = _container.Find(item => item.GUID == guid);
 
-            UpdateTextWindow(container.Items);
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            if (_ignoreTextChanged == true)
-                return;
-            
-            if (_currentItemControl == null)
-                return;
-
-            if (_container == null)
-                return;
-            
-            var textControl = sender as Control;
-            if (textControl == null)
-                return;
-
-            var guid = _guids[_currentItemControl];
-            var item = _container.Find(match => match.GUID == guid);
-            item.Content = textControl.Text;
+            UpdateTextWindow(container.Audit);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

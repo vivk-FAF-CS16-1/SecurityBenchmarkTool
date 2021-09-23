@@ -6,6 +6,8 @@ namespace SBT.Audit
     public class AuditItem : ICloneable
     {
         public readonly List<AuditFieldStruct> Fields;
+
+        public Guid GUID;
         
         private const string ITEM_NAME_FIELD = "description";
         private const string DEFAULT_NAME = "unnamed";
