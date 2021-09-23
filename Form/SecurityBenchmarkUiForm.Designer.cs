@@ -50,6 +50,7 @@ namespace SBT.Form
             this.richTextBox1.Size = new System.Drawing.Size(785, 862);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
+            this.richTextBox1.NodeMouseClick += richTextBox1_NodeMouseClick;
             // 
             // tableLayoutPanel1
             // 
@@ -153,6 +154,7 @@ namespace SBT.Form
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
+
     }
 }
 
