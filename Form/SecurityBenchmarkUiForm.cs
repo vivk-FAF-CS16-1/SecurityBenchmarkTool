@@ -114,16 +114,16 @@ namespace SBT.Form
             return true;
         }
 
-        private void UpdateTextWindow(List<Audit2Struct> container)
+        private void UpdateTextWindow(List<Audit2Struct> audit)
         {
             richTextBox1.Nodes.Clear();
 
-            for (var i = 0; i < container.Count; i++)
+            for (var i = 0; i < audit.Count; i++)
             {
-                if (container[i].IsItem == false)
+                if (audit[i].IsItem == false)
                     continue;
                 
-                var item = container[i];
+                var item = audit[i];
 
                 var name = item.GetName();
                 var node = richTextBox1.Nodes.Add(name, name);
@@ -231,14 +231,30 @@ namespace SBT.Form
 
             _currentItemControl = rowControl;
 
-            var container = _container.Find(item => item.GUID == guid);
+            var dbItem = _container.Find(item => item.GUID == guid);
 
-            UpdateTextWindow(container.Audit);
+            UpdateTextWindow(dbItem.Audit);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Save_handler();
+        }
+
+        private void exportAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_currentItemControl == null)
+                return;
+
+            var guid = _guids[_currentItemControl];
+            var dbItem = _container.Find(item => item.GUID == guid);
+            if (dbItem == null)
+                return;
+
+            var content = AuditWriter.ToString(dbItem.Audit);
+            Export(content);
+            
+            // HINT for simple Export: Export(content, dbItem.SourcePath);
         }
     }
 }
