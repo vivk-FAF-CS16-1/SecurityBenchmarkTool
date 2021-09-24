@@ -13,16 +13,29 @@ namespace SBT.Form
         private JSONSaver _jsonSaver;
         private List<DBItem> _container;
 
+        private List<Audit2Struct> _containerOfItems;
+
         private Control _currentItemControl;
         private bool _ignoreTextChanged;
+
+        
+
+
 
         public SecurityBenchmarkUiForm()
         {
             InitializeComponent();
 
+
+
             if (_guids == null)
             {
                 _guids = new Dictionary<Control, Guid>();
+            }
+
+            if (_containerOfItems == null)
+            {
+                _containerOfItems = new List<Audit2Struct>();
             }
 
             _currentItemControl = null;
@@ -115,6 +128,8 @@ namespace SBT.Form
                 var name = item.GetName();
                 var node = richTextBox1.Nodes.Add(name, name);
 
+                
+
                 for (var j = 0; j < item.Fields.Count; j++)
                 {
                     var field = item.Fields[j];
@@ -125,7 +140,50 @@ namespace SBT.Form
                     var indexOfFirst = node.Nodes.IndexOf(keyNode);
                     node.Nodes[indexOfFirst].Nodes.Add(value, value);
                 }
+
+                _containerOfItems.Add(item);
             }
+        }
+
+        void richTextBox1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+
+            if (e.Button != MouseButtons.Right)
+                return;
+
+            richTextBox1.SelectedNode = e.Node;
+
+            Console.WriteLine(e.Node.Level + " " + e.Node.Index);
+
+            if (e.Node.Level != 0)
+            {
+                return;   
+            }
+
+            var index = e.Node.Index;
+
+            if (_containerOfItems.Count <= index)
+                return;
+
+
+
+            var contextMenuStrip = new ContextMenuStrip();
+
+            contextMenuStrip.Items.Add("Edit", null, EditItemContextMenuStrip_Click);
+
+            if (_containerOfItems[index].IsActive)
+            {
+                contextMenuStrip.Items.Add("Deactivate", null, null);
+                e.Node.NodeFont = new System.Drawing.Font(richTextBox1.Font, System.Drawing.FontStyle.Strikeout);
+                
+            }
+            else
+            {
+                contextMenuStrip.Items.Add("Activate", null, null);
+                e.Node.NodeFont = richTextBox1.Font;
+            }
+
+            e.Node.ContextMenuStrip = contextMenuStrip;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -149,6 +207,14 @@ namespace SBT.Form
             importForm.Show();
             importForm.Completed = UpdateTableLayoutPanel;
         }
+
+        private void EditItemContextMenuStrip_Click(object sender, EventArgs e)
+        {
+            var editItemForm = new EditItemForm();
+            editItemForm.Show();
+            //editItemForm.Completed = UpdateSmthng; //todo: to implement the idea of this action in form EditItemForm
+        }
+
 
         private void tableLayoutPanel1_Click(object sender, EventArgs e)
         {

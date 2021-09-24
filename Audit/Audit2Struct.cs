@@ -18,6 +18,9 @@ namespace SBT.Audit
         private const string DEFAULT_NAME = "unnamed";
 
         public bool IsItem => Fields.Count != 0;
+        public bool IsActive { get => isActive; set => isActive = value; }
+
+        private bool isActive = true;
 
         public Audit2Struct(string header, Guid? parent)
         {

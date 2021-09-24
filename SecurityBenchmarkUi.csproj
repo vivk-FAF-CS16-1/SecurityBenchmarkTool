@@ -56,6 +56,12 @@
     <Compile Include="Audit\AuditWriter.cs" />
     <Compile Include="DataBase\DBItem.cs" />
     <Compile Include="DataBase\JSONSaver.cs" />
+    <Compile Include="Form\EditItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\EditItemForm.Designer.cs">
+      <DependentUpon>EditItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form\ImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
