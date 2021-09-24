@@ -18,6 +18,9 @@ namespace SBT.Audit
         private static string ToString(Audit2Struct auditElement, int depth, List<Audit2Struct> container)
         {
             var result = string.Empty;
+
+            if (auditElement.IsActive == false)
+                return result;
             
             var tabs = GetTabs(depth);
             var header = tabs + auditElement.Header + NEW_LINE;

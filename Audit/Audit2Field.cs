@@ -1,6 +1,6 @@
 ﻿namespace SBT.Audit
 {
-    public struct Audit2Field
+    public class Audit2Field
     {
         public string Key;
         public string Value;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using SBT.Audit;
 using SBT.DataBase;
@@ -8,14 +10,15 @@ namespace SBT.Form
 {
     public partial class SecurityBenchmarkUiForm : System.Windows.Forms.Form
     {
-        private Dictionary<Control, Guid> _guids;
+        private Dictionary<Control, Guid> _controlGuids;
+        private Dictionary<TreeNode, Audit2Struct> _treeNodeDict;
 
         private JSONSaver _jsonSaver;
         private List<DBItem> _container;
 
-        private List<Audit2Struct> _containerOfItems;
-
         private Control _currentItemControl;
+        private TreeNode _currentTreeNode;
+        
         private bool _ignoreTextChanged;
 
         
@@ -28,17 +31,19 @@ namespace SBT.Form
 
 
 
-            if (_guids == null)
+            if (_controlGuids == null)
             {
-                _guids = new Dictionary<Control, Guid>();
+                _controlGuids = new Dictionary<Control, Guid>();
             }
 
-            if (_containerOfItems == null)
+            if (_treeNodeDict == null)
             {
-                _containerOfItems = new List<Audit2Struct>();
+                _treeNodeDict = new Dictionary<TreeNode, Audit2Struct>();
             }
 
             _currentItemControl = null;
+            _currentTreeNode = null;
+            
             _ignoreTextChanged = false;
 
             _jsonSaver = JSONSaver.Instance;
@@ -55,6 +60,8 @@ namespace SBT.Form
             {
                 c.MouseClick += tableLayoutPanel1_Click;
             }
+            
+            richTextBox1.NodeMouseClick += richTextBox1_NodeMouseClick;
         }
 
 
@@ -67,7 +74,7 @@ namespace SBT.Form
             tableLayoutPanel1.Controls.Add(new Label() { Text = "Unique Name" }, 0, 0);
             tableLayoutPanel1.Controls.Add(new Label() { Text = "Source Path" }, 1, 0);
             
-            _guids.Clear();
+            _controlGuids.Clear();
 
             foreach (var item in container)
             {
@@ -79,7 +86,7 @@ namespace SBT.Form
                 nameTextBox.ReadOnly = true;
                 nameTextBox.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
                 
-                _guids.Add(nameTextBox, item.GUID);
+                _controlGuids.Add(nameTextBox, item.GUID);
 
                 var sourcePathTextBox = new TextBox();
                 sourcePathTextBox.Text = item.SourcePath;
@@ -117,6 +124,7 @@ namespace SBT.Form
         private void UpdateTextWindow(List<Audit2Struct> audit)
         {
             richTextBox1.Nodes.Clear();
+            _treeNodeDict.Clear();
 
             for (var i = 0; i < audit.Count; i++)
             {
@@ -126,62 +134,60 @@ namespace SBT.Form
                 var item = audit[i];
 
                 var name = item.GetName();
-                var node = richTextBox1.Nodes.Add(name, name);
-
+                var node = richTextBox1.Nodes.Add(name);
                 
+                _treeNodeDict.Add(node, item);
+                UpdateTreeNode(node, item);
+            }
+        }
 
-                for (var j = 0; j < item.Fields.Count; j++)
-                {
-                    var field = item.Fields[j];
-                    var key = field.Key;
-                    var value = field.Value;
+        private void UpdateTreeNode(TreeNode node, Audit2Struct audit)
+        {
+            var font = richTextBox1.Font;
+            if (audit.IsActive == false)
+            {
+                font = new Font(font, FontStyle.Strikeout);
+            }
+
+            node.NodeFont = font;
+            
+            var name = audit.GetName();
+            node.Name = name;
+            
+            node.Nodes.Clear();
+            for (var index = 0; index < audit.Fields.Count; index++)
+            {
+                var field = audit.Fields[index];
+                var key = field.Key;
+                var value = field.Value;
                     
-                    var keyNode = node.Nodes.Add(key, key);
-                    var indexOfFirst = node.Nodes.IndexOf(keyNode);
-                    node.Nodes[indexOfFirst].Nodes.Add(value, value);
-                }
-
-                _containerOfItems.Add(item);
+                var keyNode = node.Nodes.Add(key, key);
+                var indexOfFirst = node.Nodes.IndexOf(keyNode);
+                node.Nodes[indexOfFirst].Nodes.Add(value, value);
             }
         }
 
         void richTextBox1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-
             if (e.Button != MouseButtons.Right)
                 return;
 
             richTextBox1.SelectedNode = e.Node;
 
-            Console.WriteLine(e.Node.Level + " " + e.Node.Index);
-
             if (e.Node.Level != 0)
-            {
                 return;   
-            }
 
-            var index = e.Node.Index;
-
-            if (_containerOfItems.Count <= index)
-                return;
-
-
+            _currentTreeNode = e.Node;
 
             var contextMenuStrip = new ContextMenuStrip();
 
             contextMenuStrip.Items.Add("Edit", null, EditItemContextMenuStrip_Click);
 
-            if (_containerOfItems[index].IsActive)
-            {
-                contextMenuStrip.Items.Add("Deactivate", null, null);
-                e.Node.NodeFont = new System.Drawing.Font(richTextBox1.Font, System.Drawing.FontStyle.Strikeout);
-                
-            }
-            else
-            {
-                contextMenuStrip.Items.Add("Activate", null, null);
-                e.Node.NodeFont = richTextBox1.Font;
-            }
+            var auditItem = _treeNodeDict[_currentTreeNode];
+            var changeStateText = !auditItem.IsActive 
+                ? "Activate" 
+                : "Deactivate";
+            contextMenuStrip.Items.Add(changeStateText, null, ChangeStateItemContextMenuStrip_Click);
 
             e.Node.ContextMenuStrip = contextMenuStrip;
         }
@@ -210,9 +216,25 @@ namespace SBT.Form
 
         private void EditItemContextMenuStrip_Click(object sender, EventArgs e)
         {
-            var editItemForm = new EditItemForm();
+            var node = _currentTreeNode;
+            var audit = _treeNodeDict[node];
+            
+            var editItemForm = new EditItemForm(audit);
             editItemForm.Show();
-            //editItemForm.Completed = UpdateSmthng; //todo: to implement the idea of this action in form EditItemForm
+
+            var onUpdate = new Action(() =>
+            {
+                UpdateTreeNode(node, audit);
+            });
+            editItemForm.OnUpdate = onUpdate;
+        }
+        
+        private void ChangeStateItemContextMenuStrip_Click(object sender, EventArgs e)
+        {
+            var auditItem = _treeNodeDict[_currentTreeNode];
+            auditItem.IsActive = !auditItem.IsActive;
+            
+            UpdateTreeNode(_currentTreeNode, auditItem);
         }
 
 
@@ -224,10 +246,10 @@ namespace SBT.Form
             
             var rowControl = tableLayoutPanel1.GetControlFromPosition(0, rowIndex);
 
-            if (_guids.ContainsKey(rowControl) == false)
+            if (_controlGuids.ContainsKey(rowControl) == false)
                 return;
 
-            var guid = _guids[rowControl];
+            var guid = _controlGuids[rowControl];
 
             _currentItemControl = rowControl;
 
@@ -246,7 +268,7 @@ namespace SBT.Form
             if (_currentItemControl == null)
                 return;
 
-            var guid = _guids[_currentItemControl];
+            var guid = _controlGuids[_currentItemControl];
             var dbItem = _container.Find(item => item.GUID == guid);
             if (dbItem == null)
                 return;
