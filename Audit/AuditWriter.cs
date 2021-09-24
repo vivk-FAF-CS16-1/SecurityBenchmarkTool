@@ -5,82 +5,66 @@ namespace SBT.Audit
 {
     public static class AuditWriter
     {
-        public struct AuditWriterParams
-        {
-            public bool Indexing;
-            public char TabCharacter;
-            public string NewLineSymbols;
+        private const string NEW_LINE = "\r\n";
+        private const string FIELD_SEPARATOR = ": ";
 
-            public AuditWriterParams(bool indexing, char tabCharacter, string newLineSymbols)
-            {
-                Indexing = indexing;
-                TabCharacter = tabCharacter;
-                NewLineSymbols = newLineSymbols;
-            }
+        public static string ToString(List<Audit2Struct> container)
+        {
+            var root = container.First();
+
+            return ToString(root, 0, container);
         }
 
-        public static AuditWriterParams DefaultParams = new AuditWriterParams(false, ' ', "\r\n");
-
-        public static string ToString(List<AuditStruct> container, AuditWriterParams @params)
+        private static string ToString(Audit2Struct auditElement, int depth, List<Audit2Struct> container)
         {
             var result = string.Empty;
+            
+            var tabs = GetTabs(depth);
+            var header = tabs + auditElement.Header + NEW_LINE;
 
-            var width = container.Last().Index.ToString().Length;
-            foreach (var auditStruct in container)
+            result += header;
+            
+            foreach (var fieldElement in auditElement.Fields)
             {
-                if (auditStruct.GUID != null)
-                {
-                    
-                }
-                
-                if (@params.Indexing)
-                {
-                    var index = GetIndexing(auditStruct.Index, width);
-                    result += index + ' ';
-                }
-
-                var tabs = GetTabs(auditStruct.Length, @params.TabCharacter);
-                result += tabs;
-
-                result += auditStruct.Line;
-
-                result += @params.NewLineSymbols;
+                result += ToString(fieldElement, depth + 1) + NEW_LINE;
             }
 
-            return result;
-        }
-        
-        public static string ToString(List<AuditStruct> container)
-        {
-            return ToString(container, DefaultParams);
-        }
-
-        private static string GetIndexing(int index, int width)
-        {
-            var result = string.Empty;
-
-            var indexString = index.ToString();
-            var substruct = width - indexString.Length;
-            for (var i = 0; i < substruct; i++)
+            foreach (var childGUID in auditElement.Children)
             {
-                result += ' ';
+                var child = Audit2Struct.GetByGUID(container, childGUID);
+                result += ToString(child, depth + 1, container);
             }
 
-            return result + indexString;
-        }
-
-        private static string GetTabs(int count, char tabCharacter)
-        {
-            var result = string.Empty;
-
-            for (var i = 0; i < count; i++)
+            var bottom = auditElement.Header;
+            foreach (var character in new string[]{ "<", ">" })
             {
-                result += tabCharacter + "   ";
+                bottom = bottom.Replace(character, string.Empty);
             }
+
+            var args = bottom.Split(' ', ':');
+            bottom = tabs + "</" + args[0] + ">" + NEW_LINE;
+            
+            result += bottom;
 
             return result;
         }
 
-        
+        private static string ToString(Audit2Field fieldElement, int depth)
+        {
+            var tabs = GetTabs(depth);
+            var field = tabs + fieldElement.Key + FIELD_SEPARATOR + fieldElement.Value;
+            return field;
+        }
+
+        private static string GetTabs(int count)
+        {
+            var result = string.Empty;
+            for (int i = 0; i < count; i++)
+            {
+                result += "\t";
+            }
+
+            return result;
+        }
     }
 }

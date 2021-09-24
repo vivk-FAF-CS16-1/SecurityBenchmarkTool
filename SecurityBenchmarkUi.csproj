@@ -52,10 +52,7 @@
   <ItemGroup>
     <Compile Include="Audit\Audit2Field.cs" />
     <Compile Include="Audit\Audit2Struct.cs" />
-    <Compile Include="Audit\AuditFieldStruct.cs" />
-    <Compile Include="Audit\AuditItem.cs" />
     <Compile Include="Audit\AuditParser.cs" />
-    <Compile Include="Audit\AuditStruct.cs" />
     <Compile Include="Audit\AuditWriter.cs" />
     <Compile Include="DataBase\DBItem.cs" />
     <Compile Include="DataBase\JSONSaver.cs" />
@@ -69,6 +66,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\SecurityBenchmarkUiForm.Designer.cs">
+      <DependentUpon>SecurityBenchmarkUiForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\SecurityBenchmarkUiForm.Export.cs">
       <DependentUpon>SecurityBenchmarkUiForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Legacy\AuditFilesDatabaseController.cs" />

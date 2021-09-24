@@ -69,12 +69,14 @@ namespace SBT.Form
             using (var sr = new StreamReader(@sourcePath))
             {
                 var sourceContent = sr.ReadToEnd();
-                var (err, parseData) = AuditParser.Parse(sourceContent);
-                var (err2, parseTest) = AuditParser.ParseV2(sourceContent);
-                var test = AuditParser.ParseItems(parseData);
-                var testJson = JsonConvert.SerializeObject(test);
-                var testDeserialize = JsonConvert.DeserializeObject<List<AuditItem>>(testJson);
-                var content = err ?? AuditWriter.ToString(parseData);
+                var (err, parseTest) = AuditParser.ParseV2(sourceContent);
+
+                if (err != null)
+                {
+                    Application.Exit();
+                    return;
+                }
+                
                 var newItem = new DBItem
                 {
                     GUID = Guid.NewGuid(),
