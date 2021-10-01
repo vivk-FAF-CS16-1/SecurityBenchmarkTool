@@ -18,6 +18,7 @@ namespace SBT.Form
 
         private Control _currentItemControl;
         private TreeNode _currentTreeNode;
+        private List<Audit2Struct> _currentAudit;
         
         private bool _ignoreTextChanged;
 
@@ -43,6 +44,7 @@ namespace SBT.Form
 
             _currentItemControl = null;
             _currentTreeNode = null;
+            _currentAudit = null;
             
             _ignoreTextChanged = false;
 
@@ -251,10 +253,11 @@ namespace SBT.Form
 
             var guid = _controlGuids[rowControl];
 
-            _currentItemControl = rowControl;
+            _currentItemControl = rowControl; 
 
             var dbItem = _container.Find(item => item.GUID == guid);
 
+            _currentAudit = dbItem.Audit;
             UpdateTextWindow(dbItem.Audit);
         }
 
@@ -277,6 +280,14 @@ namespace SBT.Form
             Export(content);
             
             // HINT for simple Export: Export(content, dbItem.SourcePath);
+        }
+
+        private void runAuditToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_currentAudit == null)
+                return;
+            var runAuditForm = new RunAuditForm(_currentAudit);
+            runAuditForm.Show();
         }
     }
 }

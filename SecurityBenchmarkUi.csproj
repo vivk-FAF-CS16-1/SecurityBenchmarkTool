@@ -68,6 +68,12 @@
     <Compile Include="Form\ImportForm.Designer.cs">
       <DependentUpon>ImportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form\RunAuditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\RunAuditForm.Designer.cs">
+      <DependentUpon>RunAuditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form\SecurityBenchmarkUiForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\ImportForm.resx">
       <DependentUpon>ImportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\RunAuditForm.resx">
+      <DependentUpon>RunAuditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SecurityBenchmarkUiForm.resx">
       <DependentUpon>SecurityBenchmarkUiForm.cs</DependentUpon>
