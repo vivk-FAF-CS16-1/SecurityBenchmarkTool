@@ -10,6 +10,8 @@ namespace SBT.Form
 {
     public partial class SecurityBenchmarkUiForm : System.Windows.Forms.Form
     {
+        private FindItemForm _findItemForm;
+
         private Dictionary<Control, Guid> _controlGuids;
         private Dictionary<TreeNode, Audit2Struct> _treeNodeDict;
 
@@ -29,8 +31,6 @@ namespace SBT.Form
         public SecurityBenchmarkUiForm()
         {
             InitializeComponent();
-
-
 
             if (_controlGuids == null)
             {
@@ -169,6 +169,7 @@ namespace SBT.Form
             }
         }
 
+
         void richTextBox1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
@@ -288,6 +289,56 @@ namespace SBT.Form
                 return;
             var runAuditForm = new RunAuditForm(_currentAudit);
             runAuditForm.Show();
+        }
+
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_findItemForm == null || _findItemForm.IsDisposed)
+                _findItemForm = new FindItemForm();
+
+            
+
+            _findItemForm.Show();
+            _findItemForm.Focus();
+        }
+
+        public void FindItemsByName(string itemName)
+        {
+            if (_currentAudit == null)
+                return;
+
+            var copyCurrentAudit = new List<Audit2Struct>(_currentAudit);
+
+            int i = 0;
+            while (i < copyCurrentAudit.Count)
+            {
+                if (!copyCurrentAudit[i].GetName().ToUpper().Contains(itemName.ToUpper()))
+                {
+                    copyCurrentAudit.Remove(copyCurrentAudit[i]);
+                    continue;
+                }
+                i++;
+            }
+
+            UpdateTextWindow(copyCurrentAudit);
+        }
+
+        private void activateAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var node in _treeNodeDict.Keys)
+            {
+                _treeNodeDict[node].IsActive = true;
+                UpdateTreeNode(node, _treeNodeDict[node]);
+            }
+        }
+
+        private void deactivateAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var node in _treeNodeDict.Keys)
+            {
+                _treeNodeDict[node].IsActive = false;
+                UpdateTreeNode(node, _treeNodeDict[node]);
+            }
         }
     }
 }

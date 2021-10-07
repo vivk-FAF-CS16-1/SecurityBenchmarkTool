@@ -62,6 +62,12 @@
     <Compile Include="Form\EditItemForm.Designer.cs">
       <DependentUpon>EditItemForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form\FindItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FindItemForm.Designer.cs">
+      <DependentUpon>FindItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form\ImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form\EditItemForm.resx">
       <DependentUpon>EditItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FindItemForm.resx">
+      <DependentUpon>FindItemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\ImportForm.resx">
       <DependentUpon>ImportForm.cs</DependentUpon>

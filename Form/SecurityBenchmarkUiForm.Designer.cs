@@ -38,6 +38,10 @@ namespace SBT.Form
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.activateAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deactivateAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runAuditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
@@ -102,7 +106,7 @@ namespace SBT.Form
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.importToolStripMenuItem.Text = "Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -110,14 +114,14 @@ namespace SBT.Form
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.saveToolStripMenuItem.Text = "Save DB";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exportAsToolStripMenuItem
             // 
             this.exportAsToolStripMenuItem.Name = "exportAsToolStripMenuItem";
-            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.exportAsToolStripMenuItem.Text = "Export As";
             this.exportAsToolStripMenuItem.Click += new System.EventHandler(this.exportAsToolStripMenuItem_Click);
             // 
@@ -125,12 +129,44 @@ namespace SBT.Form
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.startToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1156, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.activateAllToolStripMenuItem,
+            this.deactivateAllToolStripMenuItem,
+            this.findToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // activateAllToolStripMenuItem
+            // 
+            this.activateAllToolStripMenuItem.Name = "activateAllToolStripMenuItem";
+            this.activateAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activateAllToolStripMenuItem.Text = "Activate All";
+            this.activateAllToolStripMenuItem.Click += new System.EventHandler(this.activateAllToolStripMenuItem_Click);
+            // 
+            // deactivateAllToolStripMenuItem
+            // 
+            this.deactivateAllToolStripMenuItem.Name = "deactivateAllToolStripMenuItem";
+            this.deactivateAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deactivateAllToolStripMenuItem.Text = "Deactivate All";
+            this.deactivateAllToolStripMenuItem.Click += new System.EventHandler(this.deactivateAllToolStripMenuItem_Click);
+            // 
+            // findToolStripMenuItem
+            // 
+            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.findToolStripMenuItem.Text = "Find";
+            this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
             // 
             // startToolStripMenuItem
             // 
@@ -143,7 +179,7 @@ namespace SBT.Form
             // runAuditToolStripMenuItem
             // 
             this.runAuditToolStripMenuItem.Name = "runAuditToolStripMenuItem";
-            this.runAuditToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.runAuditToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.runAuditToolStripMenuItem.Text = "Run selected audit";
             this.runAuditToolStripMenuItem.Click += new System.EventHandler(this.runAuditToolStripMenuItem_Click);
             // 
@@ -183,6 +219,10 @@ namespace SBT.Form
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runAuditToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem activateAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deactivateAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
     }
 }
 
