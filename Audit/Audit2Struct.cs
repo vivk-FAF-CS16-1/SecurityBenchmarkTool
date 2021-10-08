@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SBT.Utils;
 
 namespace SBT.Audit
 {
@@ -34,6 +35,17 @@ namespace SBT.Audit
             Fields = new List<Audit2Field>();
         }
 
+        /*
+        
+        public Audit2Struct(Audit2Struct audit)
+        {
+            Fields = new List<Audit2Field>(audit.Fields);
+
+            GUID = audit.GUID;
+        }
+        
+        */
+
         public string GetName()
         {
             if (IsItem == false)
@@ -61,6 +73,16 @@ namespace SBT.Audit
             }
 
             return null;
+        }
+
+        public Audit2Field GetField(string key)
+        {
+            return Fields.Find(match => match.Key.CustomTrim() == key);
+        }
+
+        public void AddField(string key, string value)
+        {
+            Fields.Add(new Audit2Field(key, value));
         }
     }
 }

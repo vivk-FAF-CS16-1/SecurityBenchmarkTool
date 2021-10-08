@@ -29,24 +29,24 @@ namespace SBT.Form
         /// </summary>
         private void InitializeComponent()
         {
-            this.AuditReportTextBox = new System.Windows.Forms.RichTextBox();
+            this.AuditReportView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // AuditReportTextBox
             // 
-            this.AuditReportTextBox.BackColor = System.Drawing.Color.White;
-            this.AuditReportTextBox.Location = new System.Drawing.Point(12, 12);
-            this.AuditReportTextBox.Name = "AuditReportTextBox";
-            this.AuditReportTextBox.Size = new System.Drawing.Size(670, 432);
-            this.AuditReportTextBox.TabIndex = 0;
-            this.AuditReportTextBox.Text = "";
+            this.AuditReportView.BackColor = System.Drawing.Color.White;
+            this.AuditReportView.Location = new System.Drawing.Point(12, 12);
+            this.AuditReportView.Name = "AuditReportView";
+            this.AuditReportView.Size = new System.Drawing.Size(670, 432);
+            this.AuditReportView.TabIndex = 0;
+            this.AuditReportView.Text = "";
             // 
             // RunAuditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.AuditReportTextBox);
+            this.Controls.Add(this.AuditReportView);
             this.Name = "RunAuditForm";
             this.Text = "RunAuditForm";
             this.ResumeLayout(false);
@@ -55,6 +55,6 @@ namespace SBT.Form
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox AuditReportTextBox;
+        private System.Windows.Forms.TreeView AuditReportView;
     }
 }

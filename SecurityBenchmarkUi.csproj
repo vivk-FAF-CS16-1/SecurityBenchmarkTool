@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Audit\Audit2Field.cs" />
     <Compile Include="Audit\Audit2Struct.cs" />
+    <Compile Include="Audit\Auditor.cs" />
     <Compile Include="Audit\AuditParser.cs" />
     <Compile Include="Audit\AuditWriter.cs" />
     <Compile Include="DataBase\DBItem.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Legacy\AuditFilesDatabaseController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\StringEx.cs" />
     <EmbeddedResource Include="Form\EditItemForm.resx">
       <DependentUpon>EditItemForm.cs</DependentUpon>
     </EmbeddedResource>
