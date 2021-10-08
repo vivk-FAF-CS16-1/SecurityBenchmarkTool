@@ -10,3 +10,6 @@
  * ***Lab-2***:
     * https://youtu.be/hmjW-VavxZI
     * https://youtu.be/opPXh9_bYEU
+
+ * ***Lab-3***:
+    * https://youtu.be/z_VpTJoknyg
