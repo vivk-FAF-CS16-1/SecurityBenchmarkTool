@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Microsoft.Win32;
 using SBT.Utils;
 
@@ -28,6 +29,15 @@ namespace SBT.Audit
 
         private static Audit2Struct AuditRegistrySettings(Audit2Struct item)
         {
+            var enforced = item.GetField("enforced");
+            if (enforced != null)
+            {
+                item.AddField(
+                    key: "audit_status", 
+                    value: "Passed");
+                return item;
+            }
+            
             var valueDataField = item.GetField("value_data");
             if (valueDataField == null)
             {
@@ -173,6 +183,27 @@ namespace SBT.Audit
                 key: "audit_status", 
                 value: "Passed");
             return item;
+        }
+
+        public static void Enforce(Audit2Struct item, bool status)
+        {
+            var enforced = item.GetField("enforced");
+            if (status)
+            {
+                if (enforced == null)
+                {
+                    item.AddField("enforced", "true");
+                }
+            }
+            else
+            {
+                if (enforced != null)
+                {
+                    item.Fields.Remove(enforced);
+                }
+            }
+            
+            Thread.Sleep(10);
         }
     }
 }

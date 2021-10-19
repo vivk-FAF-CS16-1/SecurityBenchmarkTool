@@ -14,15 +14,20 @@ namespace SBT.Form
 {
     public partial class RunAuditForm : System.Windows.Forms.Form
     {
+        private Dictionary<Audit2Struct, Audit2Struct> _container;
         private List<Audit2Struct> _audit;
 
         public RunAuditForm(List<Audit2Struct> audit)
         {
             InitializeComponent();
 
+            if (_container == null)
+                _container = new Dictionary<Audit2Struct, Audit2Struct>();
+            
             if (_audit == null)
                 _audit = new List<Audit2Struct>();
 
+            _container.Clear();
             _audit.Clear();
             foreach (var item in audit)
             {
@@ -34,6 +39,8 @@ namespace SBT.Form
                     continue;
 
                 _audit.Add(newItem);
+                
+                _container.Add(newItem, item);
             }
             
             UpdateTextWindow(_audit);
@@ -87,6 +94,30 @@ namespace SBT.Form
         private void huyPoVsemuEbalu()
         {
             AuditReportView.Text = "Xuy na!";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var newAudit = new List<Audit2Struct>();
+            
+            for (var i = 0; i < _audit.Count; i++)
+            {
+                var item = _audit[i];
+                var sourceAudit = _container[item]; 
+                Auditor.Enforce(sourceAudit, true);
+
+                _container.Remove(item);
+                
+                var newItem = Auditor.Audit(sourceAudit);
+                
+                newAudit.Add(newItem);
+                _container.Add(newItem, sourceAudit);
+            }
+
+            _audit.Clear();
+            _audit = newAudit;
+            
+            UpdateTextWindow(_audit);
         }
     }
 }
