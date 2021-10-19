@@ -44,6 +44,7 @@ namespace SBT.Form
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runAuditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -74,8 +75,7 @@ namespace SBT.Form
             // 
             // textBox2
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(3, 3);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
@@ -84,8 +84,7 @@ namespace SBT.Form
             // 
             // textBox3
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox3.Location = new System.Drawing.Point(94, 3);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
@@ -95,10 +94,7 @@ namespace SBT.Form
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.exportAsToolStripMenuItem});
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.importToolStripMenuItem, this.saveToolStripMenuItem, this.exportAsToolStripMenuItem });
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -127,10 +123,7 @@ namespace SBT.Form
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.startToolStripMenuItem});
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.fileToolStripMenuItem, this.editToolStripMenuItem, this.startToolStripMenuItem });
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1156, 24);
@@ -139,10 +132,7 @@ namespace SBT.Form
             // 
             // editToolStripMenuItem
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.activateAllToolStripMenuItem,
-            this.deactivateAllToolStripMenuItem,
-            this.findToolStripMenuItem});
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.activateAllToolStripMenuItem, this.deactivateAllToolStripMenuItem, this.findToolStripMenuItem });
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -150,28 +140,27 @@ namespace SBT.Form
             // activateAllToolStripMenuItem
             // 
             this.activateAllToolStripMenuItem.Name = "activateAllToolStripMenuItem";
-            this.activateAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activateAllToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.activateAllToolStripMenuItem.Text = "Activate All";
             this.activateAllToolStripMenuItem.Click += new System.EventHandler(this.activateAllToolStripMenuItem_Click);
             // 
             // deactivateAllToolStripMenuItem
             // 
             this.deactivateAllToolStripMenuItem.Name = "deactivateAllToolStripMenuItem";
-            this.deactivateAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deactivateAllToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.deactivateAllToolStripMenuItem.Text = "Deactivate All";
             this.deactivateAllToolStripMenuItem.Click += new System.EventHandler(this.deactivateAllToolStripMenuItem_Click);
             // 
             // findToolStripMenuItem
             // 
             this.findToolStripMenuItem.Name = "findToolStripMenuItem";
-            this.findToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.findToolStripMenuItem.Text = "Find";
             this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
             // 
             // startToolStripMenuItem
             // 
-            this.startToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.runAuditToolStripMenuItem});
+            this.startToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.runAuditToolStripMenuItem, this.resetRegisterToolStripMenuItem });
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
             this.startToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.startToolStripMenuItem.Text = "Start";
@@ -182,6 +171,13 @@ namespace SBT.Form
             this.runAuditToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.runAuditToolStripMenuItem.Text = "Run selected audit";
             this.runAuditToolStripMenuItem.Click += new System.EventHandler(this.runAuditToolStripMenuItem_Click);
+            // 
+            // resetRegisterToolStripMenuItem
+            // 
+            this.resetRegisterToolStripMenuItem.Name = "resetRegisterToolStripMenuItem";
+            this.resetRegisterToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.resetRegisterToolStripMenuItem.Text = "Reset Register";
+            this.resetRegisterToolStripMenuItem.Click += new System.EventHandler(this.resetRegisterToolStripMenuItem_Click);
             // 
             // SecurityBenchmarkUiForm
             // 
@@ -202,8 +198,9 @@ namespace SBT.Form
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
+
+        private System.Windows.Forms.ToolStripMenuItem resetRegisterToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem exportAsToolStripMenuItem;
 

@@ -344,5 +344,16 @@ namespace SBT.Form
                 UpdateTreeNode(node, _treeNodeDict[node]);
             }
         }
+
+        private void resetRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_currentAudit == null)
+                return;
+
+            foreach (var item in _currentAudit)
+            {
+                Auditor.Enforce(item, false);
+            }
+        }
     }
 }
